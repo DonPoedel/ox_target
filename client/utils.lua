@@ -197,7 +197,10 @@ SetTimeout(0, function()
         require 'client.framework.esx'
     elseif utils.hasExport('qb-core.GetCoreObject') then
         require 'client.framework.qb'
+    elseif utils.hasExport('core.call') then
+        require 'client.framework.zeno'
     end
+
 end)
 
 function utils.warn(msg)

@@ -1,43 +1,46 @@
+local utils = require 'client.utils'
+
 local characterData = nil
 
-AddEventHandler('zeno:server:characterData:load', function(source, character)
+RegisterNetEvent('zeno:client:player:load', function(character)
     characterData = {
         job = {},
         gang = {},
     }
-    characterData.source = source
     characterData.identifier = character.id
     if character.job ~= nil then
         characterData.job.name = character.job.slug
-        characterData.job.level = character.job.role.slug
+        characterData.job.level = tonumber(character.job.role.slug)
     end
     if character.gang ~= nil then
         characterData.gang.name = character.gang.name
-        characterData.gang.level = character.gang.level
+        characterData.gang.level = tonumber(character.gang.role.slug)
     end
 end)
 
-AddEventHandler('zeno:client:reiognManager:playerUpdate', function(source, isPlayer, ped, index, state)
-    if isPlayer and characterData ~= nil then
-        if state.job ~= nil then
-            characterData.job.name = state.job.slug
-            characterData.job.level = state.job.role.slug
-        end
-        if state.gang ~= nil then
-            characterData.gang.name = state.gang.name
-            characterData.gang.level = state.gang.level
-        end
-    end
-end)
-
-AddEventHandler('zeno:server:characterData:unload', function()
+RegisterNetEvent('zeno:client:player:unload', function()
     characterData = nil
 end)
 
+AddEventHandler('zeno:client:regionManager:playerUpdate', function(source, isPlayer, ped, index, state)
+    if state ~= nil and isPlayer and characterData ~= nil then
+        if state.job ~= nil then
+            characterData.job.name = state.job.slug
+            characterData.job.level = tonumber(state.job.role.slug)
+        end
+        if state.gang ~= nil then
+            characterData.gang.name = state.gang.name
+            characterData.gang.level = tonumber(state.gang.role.slug)
+        end
+    end
+end)
+
+
 ---@diagnostic disable-next-line: duplicate-set-field
-function utils.hascharacterDataGotGroup(filter)
+function utils.hasPlayerGotGroup(filter)
+
     if characterData == nil then
-        return
+        return false
     end
 
     local _type = type(filter)
