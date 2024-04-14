@@ -28,7 +28,7 @@ AddEventHandler('zeno:client:regionManager:playerUpdate', function(isPlayer, ped
             characterData.job.level = tonumber(state.job.role.slug)
         end
         if state.gang ~= nil then
-            characterData.gang.name = state.gang.name
+            characterData.gang.name = state.gang.slug
             characterData.gang.level = tonumber(state.gang.role.slug)
         end
     end
