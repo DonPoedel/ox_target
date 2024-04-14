@@ -21,8 +21,7 @@ end)
 RegisterNetEvent('zeno:client:player:unload', function()
     characterData = nil
 end)
-
-AddEventHandler('zeno:client:regionManager:playerUpdate', function(source, isPlayer, ped, index, state)
+AddEventHandler('zeno:client:regionManager:playerUpdate', function(isPlayer, ped, index, state)
     if state ~= nil and isPlayer and characterData ~= nil then
         if state.job ~= nil then
             characterData.job.name = state.job.slug
