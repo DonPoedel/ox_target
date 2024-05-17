@@ -191,16 +191,17 @@ SetTimeout(0, function()
         end)
     end
 
-    if utils.hasExport('ox_core.GetPlayerData') then
+    if utils.hasExport('ox_core.GetPlayer') then
         require 'client.framework.ox'
     elseif utils.hasExport('es_extended.getSharedObject') then
         require 'client.framework.esx'
     elseif utils.hasExport('qb-core.GetCoreObject') then
         require 'client.framework.qb'
+    elseif utils.hasExport('ND_Core.getPlayer') then
+        require 'client.framework.nd'
     elseif utils.hasExport('core.call') then
         require 'client.framework.zeno'
     end
-
 end)
 
 function utils.warn(msg)
